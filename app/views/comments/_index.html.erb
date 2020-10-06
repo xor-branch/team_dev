@@ -1,0 +1,21 @@
+<ul>
+  <% comments.each do |comment| %>
+    <% if comment.id.present? %>
+      <li>
+        <p><%= comment.content %></p>
+        <% if comment.user.try(:email) %>
+          <%= I18n.t('views.messages.author') %>：<%= comment.user.email %><br>
+        <% else %>
+          Not User Data<br>
+        <% end %>
+
+        <% if comment.user == current_user || current_user.id == comment.article.team.owner_id %>
+          <p>
+            <%= link_to I18n.t('views.messages.delete_comment'), comment_path(comment), method: :delete, remote: true %>
+            / <%= link_to I18n.t('views.messages.edit_comment'), edit_comment_path(comment) %>
+          </p>
+        <% end %>
+      </li>
+    <% end %>
+  <% end %>
+</ul>

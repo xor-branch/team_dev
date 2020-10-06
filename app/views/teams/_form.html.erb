@@ -1,0 +1,32 @@
+<%= form_with(model: team, local: true) do |form| %>
+  <% if team.errors.any? %>
+    <div class="alert alert-danger alert-dismissible">
+      <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+      <h5>
+        <i class="icon fa fa-ban"></i>
+        <%= pluralize(team.errors.count, "error") %> prohibited this team from being saved:
+      </h5>
+      <ul>
+        <% team.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="form-group">
+    <%= form.label :name %>
+    <%= form.text_field :name, placeholder: I18n.t('views.messages.input_team_name'), class: 'form-control' %>
+  </div>
+
+  <div class="form-group">
+    <%= form.label :icon %><br>
+    <%= form.file_field :icon %>
+    <%= form.hidden_field :icon_cache %>
+  </div>
+
+  <div class="form-group">
+    <%= form.hidden_field :owner_id, value: current_user.id %>
+    <%= form.submit I18n.t('views.button.create'), class: 'btn btn-primary' %>
+  </div>
+<% end %>

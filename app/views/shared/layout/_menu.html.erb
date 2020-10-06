@@ -1,0 +1,24 @@
+<aside class="control-sidebar control-sidebar-dark">
+  <!-- Control sidebar content goes here -->
+  <div class="p-3">
+    <% if user_signed_in? %>
+      <h5>Menu</h5>
+      <p><%= link_to I18n.t('views.messages.my_page'), user_path %></p>
+      <p><%= link_to I18n.t('views.messages.team_build'), new_team_path %></p>
+
+      <h5><%= I18n.t('views.messages.select_team') %></h5>
+      <% (current_user.teams.blank? ? Team.where(id: 1) : current_user.teams).each do |team| %>
+        <%= link_to team_path(team) do %>
+          <p>
+            <%= image_tag default_img(team.icon_url), size: '30x30' %>&nbsp;
+            <%= team.name %>
+          </p>
+        <% end %>
+      <% end %>
+
+      <p>
+        <%= link_to 'Logout', destroy_user_session_path, method: :delete, class: 'btn btn-danger btn-block' %>
+      </p>
+    <% end %>
+  </div>
+</aside>
