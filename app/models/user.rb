@@ -30,6 +30,7 @@ class User < ApplicationRecord
   def owner?(team)
     self.id == team.owner_id
   end
+
   def self?(assign)
     self.id == assign.user_id
   end
