@@ -206,6 +206,7 @@ ja:
   views:
     messages:
       create_agenda: 'アジェンダ作成に成功しました！'
+      destroy_agenda: 'アジェンダ削除に成功しました！'
       create_article: '記事作成に成功しました！'
       update_article: '記事更新に成功しました！'
       assigned: 'アサインしました！'
@@ -253,12 +254,16 @@ ja:
       edit_profile: 'プロフィールを編集'
       team_you_belong_to: '所属しているチーム'
       posted_articles: '投稿した記事一覧'
+      new_leader: 'チームリーダーに指名されました。'
+      no_authority_without_owner: 'チームリーダー以外の権限譲渡は出来ません'
+      success_owner_change: "リーダー権限を移動しました！"
     button:
       submit: '投稿'
       edit: '編集'
       delete: '削除'
       create: '作成'
       invite: '招待'
+      admin: '権限移動'
     top:
       line1: 'このアプリケーションは、チームごと、議題ごとに別れて'
       line2: '特定のイシュー（議題）をメンバーで見やすく共有するためのアプリケーションです'
