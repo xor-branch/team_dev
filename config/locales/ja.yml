@@ -257,6 +257,9 @@ ja:
       new_leader: 'チームリーダーに指名されました。'
       no_authority_without_owner: 'チームリーダー以外の権限譲渡は出来ません'
       success_owner_change: "リーダー権限を移動しました！"
+      destroy_confirm: "メンバーを削除してよろしいですか？"
+      no_authority: "あなたには権限がありません"
+      inform_delete_agenda: "アジェンダが削除されました"
     button:
       submit: '投稿'
       edit: '編集'

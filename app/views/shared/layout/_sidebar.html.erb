@@ -38,7 +38,7 @@
             </span>
             </a>
             <span>
-              <% if current_user.id == agenda.user.id %>
+              <% if current_user.id == agenda.user.id || agenda.team.owner_id == current_user.id %>
                 <%= link_to t('views.button.delete'), agenda, method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-sm btn-danger d-inline-flex'%>
               <% end %>
             </span>

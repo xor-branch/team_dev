@@ -1,6 +1,7 @@
 class TeamsController < ApplicationController
   before_action :authenticate_user!
   before_action :set_team, only: %i[show edit update destroy]
+  before_action :if_not_leader, only: %i[edit update destroy]
 
   def index
     @teams = Team.all
@@ -37,6 +38,16 @@ class TeamsController < ApplicationController
       render :edit
     end
   end
+
+  def destroy
+    @team.destroy
+    redirect_to teams_url, notice: I18n.t('views.messages.delete_team')
+  end
+
+  def dashboard
+    @team = current_user.keep_team_id ? Team.find(current_user.keep_team_id) : current_user.teams.first
+  end
+
   def owner_change
      if current_user.owner?(@working_team)
        @working_team.owner_id = params[:id]
@@ -67,4 +78,11 @@ class TeamsController < ApplicationController
   def team_params
     params.fetch(:team, {}).permit %i[name icon icon_cache owner_id keep_team_id]
   end
+
+  def if_not_leader
+   unless current_user.owner?(@team)
+     flash[:notice] = I18n.t('views.messages.no_authority')
+     redirect_to team_path
+   end
+ end
 end
