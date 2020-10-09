@@ -1,4 +1,5 @@
 class ApplicationController < ActionController::Base
+  protect_from_forgery with: :null_session
   before_action :init_team, if: :user_signed_in?
   before_action :set_working_team, if: :user_signed_in?
 
