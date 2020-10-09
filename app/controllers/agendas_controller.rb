@@ -22,14 +22,25 @@ class AgendasController < ApplicationController
   end
 
   def destroy
-    if @agenda.user_id == current_user.id || @agenda.team.owner_id == current_user.id
-      @agenda.destroy
-      informed_members = @agenda.team.assigns.map(&:user)
-      DeleteAgendaInfotMailer.delete_agenda_infot_mail(informed_members).deliver
-      redirect_to dashboard_url, notice: "アジェンダを削除しました！"
-    else
-      redirect_to team_path(@agenda.team.id), notice: I18n.t('views.messages.no_authority')
-    end
+    agenda = Agenda.find(params[:id])
+     team_members = agenda.team.members
+
+     agenda_user = agenda.user_id
+     owner_id = agenda.team.owner_id
+     puts "agenda_user:#{agenda_user}"
+     puts "owener_id:#{owner_id}"
+     puts "current_user:#{current_user.id}"
+
+     if current_user.id != agenda_user && current_user.id != owner_id
+       redirect_to dashboard_url, notice: 'agendaの作成者及びチームリーダーのみ削除できます。'
+     elsif agenda.destroy
+       team_members.each do | member |
+         AssignMailer.del_agenda_mail(member.email, agenda.title).deliver
+       end
+       redirect_to dashboard_url, notice: 'アジェンダを削除しました。'
+     else
+       redirect_to dashboard_url, notice: '削除に失敗しました。'
+     end
   end
 
   private
